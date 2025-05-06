@@ -1,0 +1,6 @@
+@Sprint1_C__HostAddress = http://localhost:5288
+
+GET {{Sprint1_C__HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

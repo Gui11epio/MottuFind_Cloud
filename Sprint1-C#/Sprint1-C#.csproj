@@ -23,10 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\DTOs\" />
+    <Folder Include="Application\DTOs\Response\" />
     <Folder Include="Application\Validators\" />
     <Folder Include="Application\Services\" />
-    <Folder Include="Domain\Exceptions\" />
     <Folder Include="Infrastructure\Context\" />
     <Folder Include="Infrastructure\Mappings\" />
     <Folder Include="Infrastructure\Repositories\" />

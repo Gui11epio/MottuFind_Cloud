@@ -9,7 +9,9 @@ namespace Sprint1_C_.Domain.Entities
         public string CodigoIdentificacao { get; set; }
 
         public bool Ativa {  get; set; }
+
         // Relação com a tabela de Motos(One to one)
+        public string MotoPlaca { get; set; }
         public Moto Moto { get; set; }
     }
 }

@@ -8,6 +8,7 @@
         public string Comprimento { get; set; }
 
         // Relacionamento com a tabela de Filiais(Many to one)
+        public int FilialId { get; set; }
         public Filial Filial { get; set; }
 
         // Relacionamento com a tabela de Leitores RFID(One to many)

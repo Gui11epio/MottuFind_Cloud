@@ -10,6 +10,7 @@ namespace Sprint1_C_.Domain.Entities
         public string IpDispositivo { get; set; } // IP do leitor IoT
 
         // Relacionamento com a tabela Patio(Many to one)
+        public int PatioId { get; set; } // Chave estrangeira para a tabela de Patios
         public Patio Patio { get; set; }
 
         // Relacionamento com a tabela LeituraRfid(One to many)

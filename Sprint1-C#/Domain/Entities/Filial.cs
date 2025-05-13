@@ -8,6 +8,6 @@
         public string Pais { get; set; }
         
         // Relacionamento com a tabela de Patios(One to Many)
-        public List<Patio> Patios { get; set; } = new List<Patio>();
+        public ICollection<Patio> Patios { get; set; } = new List<Patio>();
     }
 }

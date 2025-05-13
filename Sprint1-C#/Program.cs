@@ -1,4 +1,8 @@
 
+using Microsoft.EntityFrameworkCore;
+using Sprint1_C_.Application.Services;
+using Sprint1_C_.Infrastructure.Data;
+
 namespace Sprint1_C_
 {
     public class Program
@@ -15,6 +19,17 @@ namespace Sprint1_C_
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+            builder.Services.AddScoped<MotoService>();
+            builder.Services.AddScoped<FilialService>();
+            builder.Services.AddScoped<PatioService>();
+
+
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

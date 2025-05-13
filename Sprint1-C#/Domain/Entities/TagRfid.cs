@@ -13,5 +13,7 @@ namespace Sprint1_C_.Domain.Entities
         // Relação com a tabela de Motos(One to one)
         public string MotoPlaca { get; set; }
         public Moto Moto { get; set; }
+
+        public ICollection<LeituraRfid> Leituras { get; set; } = new List<LeituraRfid>();
     }
 }

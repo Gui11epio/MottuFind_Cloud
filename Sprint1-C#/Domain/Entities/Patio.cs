@@ -12,9 +12,9 @@
         public Filial Filial { get; set; }
 
         // Relacionamento com a tabela de Leitores RFID(One to many)
-        public List<LeitorRfid> Leitores { get; set; } = new List<LeitorRfid>();
+        public ICollection<LeitorRfid> Leitores { get; set; } = new List<LeitorRfid>();
 
         // Relacionamento com a tabela de Motos(One to many)
-        public List<Moto> Motos { get; set; } = new List<Moto>();
+        public ICollection<Moto> Motos { get; set; } = new List<Moto>();
     }
 }

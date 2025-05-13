@@ -14,6 +14,6 @@ namespace Sprint1_C_.Domain.Entities
         public Patio Patio { get; set; }
 
         // Relacionamento com a tabela LeituraRfid(One to many)
-        public List<LeituraRfid> Leituras { get; set; }
+        public ICollection<LeituraRfid> Leituras { get; set; }
     }
 }

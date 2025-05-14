@@ -4,7 +4,7 @@ namespace Sprint1_C_.Application.DTOs.Requests
 {
     public class LeituraRfidRequest
     {
-        public int Id { get; set; }
+        
 
         public DateTime DataHora { get; set; }
 

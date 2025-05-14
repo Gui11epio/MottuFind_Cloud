@@ -2,5 +2,12 @@
 {
     public class LeituraRfidResponse
     {
+        public int Id { get; set; }
+
+        public DateTime DataHora { get; set; }
+
+        public int LeitorId { get; set; }
+
+        public int TagId { get; set; }
     }
 }

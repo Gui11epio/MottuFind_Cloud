@@ -18,7 +18,7 @@ namespace Sprint1_C_
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var app = builder.Build();
+            
 
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -28,7 +28,7 @@ namespace Sprint1_C_
             builder.Services.AddScoped<FilialService>();
             builder.Services.AddScoped<PatioService>();
 
-
+            var app = builder.Build();
 
 
             // Configure the HTTP request pipeline.

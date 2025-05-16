@@ -10,8 +10,14 @@ namespace TDSPM.Infrastructure.Context
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-            // ❗ Substitua com sua connection string real (Oracle, SQLite, SQL Server etc.)
-            optionsBuilder.UseOracle("User Id=xxxxxxx;Password=xxxxxxxx;Data Source=xxxxxxxx");
+            var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new Exception("A variável de ambiente DEFAULT_CONNECTION não está definida.");
+            }
+
+            optionsBuilder.UseOracle(connectionString);
 
             return new AppDbContext(optionsBuilder.Options);
         }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Sprint1_C_.Application.Services;
 using Sprint1_C_.Infrastructure.Data;
+using Sprint1_C_.Mappings;
 
 namespace Sprint1_C_
 {
@@ -18,15 +19,26 @@ namespace Sprint1_C_
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            
+
 
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));
+            {
+                var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    throw new Exception("A variável de ambiente DEFAULT_CONNECTION não está definida.");
+
+                options.UseOracle(connectionString);
+            });
+
+
 
 
             builder.Services.AddScoped<MotoService>();
             builder.Services.AddScoped<FilialService>();
             builder.Services.AddScoped<PatioService>();
+
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
             var app = builder.Build();
 

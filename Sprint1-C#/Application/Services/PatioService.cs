@@ -1,69 +1,42 @@
-﻿using Sprint1_C_.Application.DTOs.Requests;
+﻿using AutoMapper;
+using Sprint1_C_.Application.DTOs.Requests;
 using Sprint1_C_.Application.DTOs.Response;
 using Sprint1_C_.Domain.Entities;
 using Sprint1_C_.Infrastructure.Data;
-
-
 
 namespace Sprint1_C_.Application.Services
 {
     public class PatioService
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public PatioService(AppDbContext context)
+        public PatioService(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public List<PatioResponse> ObterTodos()
         {
-            return _context.Patios.Select(p => new PatioResponse
-            {
-                Id = p.Id,
-                Nome = p.Nome,
-                Largura = p.Largura,
-                Comprimento = p.Comprimento,
-                FilialId = p.FilialId
-            }).ToList();
+            var patios = _context.Patios.ToList();
+            return _mapper.Map<List<PatioResponse>>(patios);
         }
 
         public PatioResponse? ObterPorId(int id)
         {
             var patio = _context.Patios.Find(id);
-            if (patio == null) return null;
-
-            return new PatioResponse
-            {
-                Id = patio.Id,
-                Nome = patio.Nome,
-                Largura = patio.Largura,
-                Comprimento = patio.Comprimento,
-                FilialId = patio.FilialId
-            };
+            return patio == null ? null : _mapper.Map<PatioResponse>(patio);
         }
 
         public PatioResponse Criar(PatioRequest request)
         {
-            var novo = new Patio
-            {
-                Nome = request.Nome,
-                Largura = request.Largura,
-                Comprimento = request.Comprimento,
-                FilialId = request.FilialId
-            };
+            var novoPatio = _mapper.Map<Patio>(request);
 
-            _context.Patios.Add(novo);
+            _context.Patios.Add(novoPatio);
             _context.SaveChanges();
 
-            return new PatioResponse
-            {
-                Id = novo.Id,
-                Nome = novo.Nome,
-                Largura = novo.Largura,
-                Comprimento = novo.Comprimento,
-                FilialId = novo.FilialId
-            };
+            return _mapper.Map<PatioResponse>(novoPatio);
         }
 
         public bool Atualizar(int id, PatioRequest request)
@@ -71,10 +44,7 @@ namespace Sprint1_C_.Application.Services
             var patio = _context.Patios.Find(id);
             if (patio == null) return false;
 
-            patio.Nome = request.Nome;
-            patio.Largura = request.Largura;
-            patio.Comprimento = request.Comprimento;
-            patio.FilialId = request.FilialId;
+            _mapper.Map(request, patio); // Atualiza propriedades
 
             _context.Patios.Update(patio);
             _context.SaveChanges();

@@ -15,9 +15,9 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5288",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        }
     },
     "https": {
       "commandName": "Project",
@@ -25,9 +25,10 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7117;http://localhost:5288",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "DEFAULT_CONNECTION": "User Id=rm554894;Password=020306;Data Source=oracle.fiap.com.br:1521/ORCL"
+        }
     },
     "IIS Express": {
       "commandName": "IISExpress",

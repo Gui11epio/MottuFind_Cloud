@@ -11,7 +11,7 @@ namespace TDSPM.Infrastructure.Context
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
             // ❗ Substitua com sua connection string real (Oracle, SQLite, SQL Server etc.)
-            optionsBuilder.UseOracle("Data Source=xxxxxxx/orcl;User Id=xxxxxx;Password=xxxxxx;");
+            optionsBuilder.UseOracle("User Id=xxxxxxx;Password=xxxxxxxx;Data Source=xxxxxxxx");
 
             return new AppDbContext(optionsBuilder.Options);
         }

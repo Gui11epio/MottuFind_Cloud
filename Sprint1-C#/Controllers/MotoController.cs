@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sprint1_C_.Application.DTOs.Requests;
+using Sprint1_C_.Application.DTOs.Response;
 using Sprint1_C_.Application.Services;
 
 namespace Sprint1_C_.Controllers
@@ -32,6 +33,14 @@ namespace Sprint1_C_.Controllers
                 return NotFound();
             return Ok(moto);
         }
+
+        [HttpGet("pagina")]
+        public async Task<ActionResult<PagedResult<PatioResponse>>> GetPaged(int numeroPag = 1, int tamanhoPag = 10)
+        {
+            var result = await _motoService.ObterPorPagina(numeroPag, tamanhoPag);
+            return Ok(result);
+        }
+
 
         [HttpPost]
         public IActionResult Create([FromBody] MotoRequest request)

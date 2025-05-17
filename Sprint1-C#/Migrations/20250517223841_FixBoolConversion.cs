@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sprint1_C_.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FixBoolConversion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Filiais",
+                name: "TB_FILIAIS",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -23,11 +23,11 @@ namespace Sprint1_C_.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Filiais", x => x.Id);
+                    table.PrimaryKey("PK_TB_FILIAIS", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Patios",
+                name: "TB_PATIOS",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -39,17 +39,17 @@ namespace Sprint1_C_.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patios", x => x.Id);
+                    table.PrimaryKey("PK_TB_PATIOS", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Patios_Filiais_FilialId",
+                        name: "FK_TB_PATIOS_TB_FILIAIS_FilialId",
                         column: x => x.FilialId,
-                        principalTable: "Filiais",
+                        principalTable: "TB_FILIAIS",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LeitoresRfid",
+                name: "TB_LEITORES_RFID",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -60,17 +60,17 @@ namespace Sprint1_C_.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LeitoresRfid", x => x.Id);
+                    table.PrimaryKey("PK_TB_LEITORES_RFID", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LeitoresRfid_Patios_PatioId",
+                        name: "FK_TB_LEITORES_RFID_TB_PATIOS_PatioId",
                         column: x => x.PatioId,
-                        principalTable: "Patios",
+                        principalTable: "TB_PATIOS",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Motos",
+                name: "TB_MOTOS",
                 columns: table => new
                 {
                     Placa = table.Column<string>(type: "NVARCHAR2(450)", nullable: false),
@@ -82,38 +82,38 @@ namespace Sprint1_C_.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Motos", x => x.Placa);
+                    table.PrimaryKey("PK_TB_MOTOS", x => x.Placa);
                     table.ForeignKey(
-                        name: "FK_Motos_Patios_PatioId",
+                        name: "FK_TB_MOTOS_TB_PATIOS_PatioId",
                         column: x => x.PatioId,
-                        principalTable: "Patios",
+                        principalTable: "TB_PATIOS",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TagsRfid",
+                name: "TB_TAGS_RFID",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     CodigoIdentificacao = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Ativa = table.Column<bool>(type: "BOOLEAN", nullable: false),
+                    Ativa = table.Column<int>(type: "NUMBER(1)", nullable: false),
                     MotoPlaca = table.Column<string>(type: "NVARCHAR2(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TagsRfid", x => x.Id);
+                    table.PrimaryKey("PK_TB_TAGS_RFID", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TagsRfid_Motos_MotoPlaca",
+                        name: "FK_TB_TAGS_RFID_TB_MOTOS_MotoPlaca",
                         column: x => x.MotoPlaca,
-                        principalTable: "Motos",
+                        principalTable: "TB_MOTOS",
                         principalColumn: "Placa",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LeiturasRfid",
+                name: "TB_LEITURAS_RFID",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -124,49 +124,49 @@ namespace Sprint1_C_.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LeiturasRfid", x => x.Id);
+                    table.PrimaryKey("PK_TB_LEITURAS_RFID", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LeiturasRfid_LeitoresRfid_LeitorId",
+                        name: "FK_TB_LEITURAS_RFID_TB_LEITORES_RFID_LeitorId",
                         column: x => x.LeitorId,
-                        principalTable: "LeitoresRfid",
+                        principalTable: "TB_LEITORES_RFID",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LeiturasRfid_TagsRfid_TagId",
+                        name: "FK_TB_LEITURAS_RFID_TB_TAGS_RFID_TagId",
                         column: x => x.TagId,
-                        principalTable: "TagsRfid",
+                        principalTable: "TB_TAGS_RFID",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_LeitoresRfid_PatioId",
-                table: "LeitoresRfid",
+                name: "IX_TB_LEITORES_RFID_PatioId",
+                table: "TB_LEITORES_RFID",
                 column: "PatioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LeiturasRfid_LeitorId",
-                table: "LeiturasRfid",
+                name: "IX_TB_LEITURAS_RFID_LeitorId",
+                table: "TB_LEITURAS_RFID",
                 column: "LeitorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LeiturasRfid_TagId",
-                table: "LeiturasRfid",
+                name: "IX_TB_LEITURAS_RFID_TagId",
+                table: "TB_LEITURAS_RFID",
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Motos_PatioId",
-                table: "Motos",
+                name: "IX_TB_MOTOS_PatioId",
+                table: "TB_MOTOS",
                 column: "PatioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patios_FilialId",
-                table: "Patios",
+                name: "IX_TB_PATIOS_FilialId",
+                table: "TB_PATIOS",
                 column: "FilialId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TagsRfid_MotoPlaca",
-                table: "TagsRfid",
+                name: "IX_TB_TAGS_RFID_MotoPlaca",
+                table: "TB_TAGS_RFID",
                 column: "MotoPlaca",
                 unique: true);
         }
@@ -175,22 +175,22 @@ namespace Sprint1_C_.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LeiturasRfid");
+                name: "TB_LEITURAS_RFID");
 
             migrationBuilder.DropTable(
-                name: "LeitoresRfid");
+                name: "TB_LEITORES_RFID");
 
             migrationBuilder.DropTable(
-                name: "TagsRfid");
+                name: "TB_TAGS_RFID");
 
             migrationBuilder.DropTable(
-                name: "Motos");
+                name: "TB_MOTOS");
 
             migrationBuilder.DropTable(
-                name: "Patios");
+                name: "TB_PATIOS");
 
             migrationBuilder.DropTable(
-                name: "Filiais");
+                name: "TB_FILIAIS");
         }
     }
 }

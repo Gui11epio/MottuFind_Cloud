@@ -44,7 +44,7 @@ namespace Sprint1_C_.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Filiais");
+                    b.ToTable("TB_FILIAIS", (string)null);
                 });
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.LeitorRfid", b =>
@@ -70,7 +70,7 @@ namespace Sprint1_C_.Migrations
 
                     b.HasIndex("PatioId");
 
-                    b.ToTable("LeitoresRfid");
+                    b.ToTable("TB_LEITORES_RFID", (string)null);
                 });
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.LeituraRfid", b =>
@@ -96,7 +96,7 @@ namespace Sprint1_C_.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("LeiturasRfid");
+                    b.ToTable("TB_LEITURAS_RFID", (string)null);
                 });
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.Moto", b =>
@@ -124,7 +124,7 @@ namespace Sprint1_C_.Migrations
 
                     b.HasIndex("PatioId");
 
-                    b.ToTable("Motos");
+                    b.ToTable("TB_MOTOS", (string)null);
                 });
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.Patio", b =>
@@ -154,7 +154,7 @@ namespace Sprint1_C_.Migrations
 
                     b.HasIndex("FilialId");
 
-                    b.ToTable("Patios");
+                    b.ToTable("TB_PATIOS", (string)null);
                 });
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.TagRfid", b =>
@@ -165,8 +165,8 @@ namespace Sprint1_C_.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativa")
-                        .HasColumnType("BOOLEAN");
+                    b.Property<int>("Ativa")
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("CodigoIdentificacao")
                         .IsRequired()
@@ -181,7 +181,7 @@ namespace Sprint1_C_.Migrations
                     b.HasIndex("MotoPlaca")
                         .IsUnique();
 
-                    b.ToTable("TagsRfid");
+                    b.ToTable("TB_TAGS_RFID", (string)null);
                 });
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.LeitorRfid", b =>

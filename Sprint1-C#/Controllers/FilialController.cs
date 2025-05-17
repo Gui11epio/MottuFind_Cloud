@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sprint1_C_.Application.DTOs.Requests;
+using Sprint1_C_.Application.DTOs.Response;
 using Sprint1_C_.Application.Services;
 
 namespace Sprint1_C_.Controllers
@@ -24,6 +25,13 @@ namespace Sprint1_C_.Controllers
             var filial = _filialService.ObterPorId(id);
             if (filial == null) return NotFound();
             return Ok(filial);
+        }
+
+        [HttpGet("pagina")]
+        public async Task<ActionResult<PagedResult<FilialResponse>>> GetPaged(int numeroPag = 1, int tamanhoPag = 10)
+        {
+            var result = await _filialService.ObterPorPagina(numeroPag, tamanhoPag);
+            return Ok(result);
         }
 
         [HttpPost]

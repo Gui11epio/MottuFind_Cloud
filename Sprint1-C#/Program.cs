@@ -1,4 +1,5 @@
 
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Sprint1_C_.Application.Services;
 using Sprint1_C_.Infrastructure.Data;
@@ -38,6 +39,12 @@ namespace Sprint1_C_
             builder.Services.AddScoped<PatioService>();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+            builder.Services.AddControllers()
+                .AddJsonOptions(opt => {
+                                opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
+
 
 
             var app = builder.Build();

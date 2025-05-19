@@ -1,4 +1,4 @@
-# CP2- C#
+# Sprint1- C#
 
 ## 📌 Descrição do Projeto
 

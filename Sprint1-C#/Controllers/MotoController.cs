@@ -17,6 +17,8 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<MotoResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetAll()
         {
             var motos = _motoService.ObterTodos();
@@ -26,6 +28,9 @@ namespace Sprint1_C_.Controllers
         
 
         [HttpGet("placa")]
+        [ProducesResponseType(typeof(MotoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetByPlaca([FromQuery] string valor)
         {
             var moto = _motoService.ObterPorPlaca(valor);
@@ -35,6 +40,8 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpGet("pagina")]
+        [ProducesResponseType(typeof(PagedResult<PatioResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<PagedResult<PatioResponse>>> GetPaged(int numeroPag = 1, int tamanhoPag = 10)
         {
             var result = await _motoService.ObterPorPagina(numeroPag, tamanhoPag);
@@ -43,6 +50,8 @@ namespace Sprint1_C_.Controllers
 
 
         [HttpPost]
+        [ProducesResponseType(typeof(MotoResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Create([FromBody] MotoRequest request)
         {
             if (!ModelState.IsValid)
@@ -53,6 +62,9 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpPut("placa")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Update(string placa, [FromBody] MotoRequest request)
         {
             if (!ModelState.IsValid)
@@ -66,6 +78,8 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpDelete("placa")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Delete(string placa)
         {
             var removida = _motoService.Remover(placa);

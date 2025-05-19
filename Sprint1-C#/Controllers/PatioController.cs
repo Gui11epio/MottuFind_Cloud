@@ -17,9 +17,14 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<PatioResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetAll() => Ok(_patioService.ObterTodos());
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PatioResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetById(int id)
         {
             var patio = _patioService.ObterPorId(id);
@@ -28,6 +33,8 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpGet("pagina")]
+        [ProducesResponseType(typeof(PagedResult<PatioResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<PagedResult<PatioResponse>>> GetPaged(int numeroPag = 1, int tamanhoPag = 10)
         {
             var result = await _patioService.ObterPorPagina(numeroPag, tamanhoPag);
@@ -35,6 +42,8 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(PatioResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Create([FromBody] PatioRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -44,6 +53,9 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Update(int id, [FromBody] PatioRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -54,6 +66,8 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
             var deleted = _patioService.Remover(id);

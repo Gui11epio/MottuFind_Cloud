@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sprint1_C_.Migrations
 {
     /// <inheritdoc />
-    public partial class FixBoolConversion : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -77,8 +77,7 @@ namespace Sprint1_C_.Migrations
                     Modelo = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     Marca = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     Status = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    PatioId = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    TagId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    PatioId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +97,6 @@ namespace Sprint1_C_.Migrations
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     CodigoIdentificacao = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Ativa = table.Column<int>(type: "NUMBER(1)", nullable: false),
                     MotoPlaca = table.Column<string>(type: "NVARCHAR2(450)", nullable: false)
                 },
                 constraints: table =>
@@ -120,7 +118,7 @@ namespace Sprint1_C_.Migrations
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     DataHora = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
                     LeitorId = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    TagId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    TagRfidId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,8 +130,8 @@ namespace Sprint1_C_.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TB_LEITURAS_RFID_TB_TAGS_RFID_TagId",
-                        column: x => x.TagId,
+                        name: "FK_TB_LEITURAS_RFID_TB_TAGS_RFID_TagRfidId",
+                        column: x => x.TagRfidId,
                         principalTable: "TB_TAGS_RFID",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -150,9 +148,9 @@ namespace Sprint1_C_.Migrations
                 column: "LeitorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_LEITURAS_RFID_TagId",
+                name: "IX_TB_LEITURAS_RFID_TagRfidId",
                 table: "TB_LEITURAS_RFID",
-                column: "TagId");
+                column: "TagRfidId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_MOTOS_PatioId",

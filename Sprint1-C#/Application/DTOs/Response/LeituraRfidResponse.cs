@@ -8,6 +8,8 @@
 
         public int LeitorId { get; set; }
 
-        public int TagId { get; set; }
+        public int TagRfidId { get; set; }
+
+
     }
 }

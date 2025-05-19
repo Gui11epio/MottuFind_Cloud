@@ -23,8 +23,6 @@ namespace Sprint1_C_.Application.DTOs.Requests
         [Range(1, long.MaxValue, ErrorMessage = "O ID do pátio deve ser positivo.")]
         public int PatioId { get; set; }
 
-        [Required(ErrorMessage = "O Id da tag é obrigatório.")]
-        [Range(1, long.MaxValue, ErrorMessage = "O ID da tag deve ser positivo.")]
-        public int TagId { get; set; }
+      
     }
 }

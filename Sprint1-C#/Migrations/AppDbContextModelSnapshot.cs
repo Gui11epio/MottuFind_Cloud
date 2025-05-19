@@ -87,14 +87,14 @@ namespace Sprint1_C_.Migrations
                     b.Property<int>("LeitorId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("TagId")
+                    b.Property<int>("TagRfidId")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LeitorId");
 
-                    b.HasIndex("TagId");
+                    b.HasIndex("TagRfidId");
 
                     b.ToTable("TB_LEITURAS_RFID", (string)null);
                 });
@@ -115,9 +115,6 @@ namespace Sprint1_C_.Migrations
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("Status")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<int>("TagId")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("Placa");
@@ -165,9 +162,6 @@ namespace Sprint1_C_.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Ativa")
-                        .HasColumnType("NUMBER(1)");
-
                     b.Property<string>("CodigoIdentificacao")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
@@ -203,15 +197,15 @@ namespace Sprint1_C_.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Sprint1_C_.Domain.Entities.TagRfid", "Tag")
-                        .WithMany("Leituras")
-                        .HasForeignKey("TagId")
+                    b.HasOne("Sprint1_C_.Domain.Entities.TagRfid", "TagRfid")
+                        .WithMany()
+                        .HasForeignKey("TagRfidId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Leitor");
 
-                    b.Navigation("Tag");
+                    b.Navigation("TagRfid");
                 });
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.Moto", b =>
@@ -239,7 +233,7 @@ namespace Sprint1_C_.Migrations
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.TagRfid", b =>
                 {
                     b.HasOne("Sprint1_C_.Domain.Entities.Moto", "Moto")
-                        .WithOne("Tag")
+                        .WithOne("TagRfid")
                         .HasForeignKey("Sprint1_C_.Domain.Entities.TagRfid", "MotoPlaca")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -259,7 +253,7 @@ namespace Sprint1_C_.Migrations
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.Moto", b =>
                 {
-                    b.Navigation("Tag")
+                    b.Navigation("TagRfid")
                         .IsRequired();
                 });
 
@@ -268,11 +262,6 @@ namespace Sprint1_C_.Migrations
                     b.Navigation("Leitores");
 
                     b.Navigation("Motos");
-                });
-
-            modelBuilder.Entity("Sprint1_C_.Domain.Entities.TagRfid", b =>
-                {
-                    b.Navigation("Leituras");
                 });
 #pragma warning restore 612, 618
         }

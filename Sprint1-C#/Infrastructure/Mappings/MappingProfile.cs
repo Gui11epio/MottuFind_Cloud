@@ -11,8 +11,10 @@ namespace Sprint1_C_.Mappings
         {
             // Moto
             CreateMap<MotoRequest, Moto>();
-            CreateMap<Moto, MotoResponse>();
-
+            CreateMap<Moto, MotoResponse>()
+                .ForMember(dest => dest.TagRfidId, opt => opt.MapFrom(src => src.TagRfid.Id))
+                .ForMember(dest => dest.CodigoIdentificacao, opt => opt.MapFrom(src => src.TagRfid.CodigoIdentificacao));
+               
             // Filial
             CreateMap<FilialRequest, Filial>();
             CreateMap<Filial, FilialResponse>();
@@ -21,9 +23,7 @@ namespace Sprint1_C_.Mappings
             CreateMap<PatioRequest, Patio>();
             CreateMap<Patio, PatioResponse>();
 
-            // TagRfid
-            CreateMap<TagRfidRequest, TagRfid>();
-            CreateMap<TagRfid, TagRfidResponse>();
+            
         }
     }
 }

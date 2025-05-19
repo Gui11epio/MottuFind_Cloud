@@ -21,19 +21,29 @@ namespace Sprint1_C_.Application.Services
 
         public List<MotoResponse> ObterTodos()
         {
-            var motos = _context.Moto.ToList();
+            var motos = _context.Moto
+                .Include(m => m.TagRfid)
+                .ToList();
+
             return _mapper.Map<List<MotoResponse>>(motos);
         }
 
         public MotoResponse? ObterPorPlaca(string placa)
         {
-            var moto = _context.Moto.FirstOrDefault(m => m.Placa == placa);
+            var moto = _context.Moto
+                .Include(m => m.TagRfid) 
+                .FirstOrDefault(m => m.Placa == placa);
+
             return moto == null ? null : _mapper.Map<MotoResponse>(moto);
         }
 
         public async Task<PagedResult<MotoResponse>> ObterPorPagina(int numeroPag, int tamanhoPag)
         {
-            var query = _context.Moto.AsQueryable();
+            var query = _context.Moto
+                .Include(m => m.TagRfid) // <- Include aqui
+                .AsQueryable();
+
+
             var total = await query.CountAsync();
             var itens = await query
                 .Skip((numeroPag - 1) * tamanhoPag)
@@ -53,29 +63,25 @@ namespace Sprint1_C_.Application.Services
 
         public MotoResponse Criar(MotoRequest request)
         {
+            
+            // Mapeia a moto (sem tag ainda)
             var novaMoto = _mapper.Map<Moto>(request);
 
-            // Primeiro salva a moto (ela precisa existir para ser referenciada)
-            _context.Moto.Add(novaMoto);
-            _context.SaveChanges();
-
-            // Agora cria a Tag vinculada à moto
+            // Cria automaticamente a TagRfid
             var novaTag = new TagRfid
             {
-                CodigoIdentificacao = Guid.NewGuid().ToString("N").Substring(0, 12).ToUpper(),
-                Ativa = true,
-                MotoPlaca = novaMoto.Placa
+                CodigoIdentificacao = "TAG-" + request.Placa,
+                Moto = novaMoto // Associa a moto à tag
             };
 
-            _context.TagRfid.Add(novaTag);
+            // Associa a tag à moto
+            novaMoto.TagRfid = novaTag;
+
+            // Adiciona e salva (em cascata)
+            _context.Moto.Add(novaMoto); // A tag será salva junto, pois está referenciada
             _context.SaveChanges();
 
-            // Atualiza a navegação (opcional, se você quiser refletir no retorno)
-            novaMoto.Tag = novaTag;
-
-            var response = _mapper.Map<MotoResponse>(novaMoto);
-            response.Tag = _mapper.Map<TagRfidResponse>(novaTag);
-            return response;
+            return _mapper.Map<MotoResponse>(novaMoto);
         }
 
         public bool Atualizar(string placa, MotoRequest request)

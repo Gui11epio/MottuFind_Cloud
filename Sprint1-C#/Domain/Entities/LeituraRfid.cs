@@ -12,8 +12,9 @@ namespace Sprint1_C_.Domain.Entities
         public int LeitorId { get; set; } // Chave estrangeira para a tabela de Leitores RFID
         public LeitorRfid Leitor { get; set; }
 
-        // Relação com a tabela de TagRfis(Many to one)
-        public int TagId { get; set; } // Chave estrangeira para a tabela de Tags RFID
-        public TagRfid Tag { get; set; }
+        // Relação com a tabela de TagRfid(Many to one)
+        public int TagRfidId { get; set; }
+        public TagRfid TagRfid { get; set; }
+
     }
 }

@@ -15,7 +15,7 @@ namespace Sprint1_C_.Domain.Entities
         public int PatioId { get; set; }
         public Patio Patio { get; set; }
         // Relacionamento com a tabela de TagRfid(One to one)
-        public int TagId { get; set; }
-        public TagRfid Tag { get; set; }
+        public TagRfid TagRfid { get; set; }
+
     }
 }

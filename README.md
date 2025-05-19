@@ -21,6 +21,9 @@ Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, com obje
 - `GET /api/Moto/placa`  
   Retorna uma moto específica pela placa.
 
+  - `GET /api/Moto/pagina`  
+  Retorna motos por meio de páginas.
+
 - `POST /api/Moto`  
   Cria uma nova moto. Requer um corpo com os dados da moto.
 

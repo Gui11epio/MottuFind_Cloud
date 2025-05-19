@@ -2,7 +2,7 @@
 
 ## 📌 Descrição do Projeto
 
-Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, com objetivo de gerenciar entidades como Motos, Filiais e Pátios. A aplicação implementa operações básicas de CRUD (Create, Read, Update, Delete) e segue uma arquitetura em camadas (Controllers, Application, Domain, Infrastructure). Tem o objetivo de representar as relações entre as Filiais, Pátios e Motos.
+Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, tenta representar uma solução de monitoramento de motos por meio de Rfid, com objetivo de gerenciar entidades como Motos, Filiais e Pátios. A aplicação implementa operações básicas de CRUD (Create, Read, Update, Delete) e segue uma arquitetura em camadas (Controllers, Application, Domain, Infrastructure). A TagRfid é criada automaticamente quando uma moto é cadastrada
 
 ## 👥 Nome e RM dos Integrantes
 
@@ -21,7 +21,7 @@ Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, com obje
 - `GET /api/Moto/placa`  
   Retorna uma moto específica pela placa.
 
-  - `GET /api/Moto/pagina`  
+- `GET /api/Moto/pagina`  
   Retorna motos por meio de páginas.
 
 - `POST /api/Moto`  

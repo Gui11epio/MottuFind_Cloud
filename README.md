@@ -51,7 +51,7 @@ Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, tenta re
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/Gui11epio/CP2_C-.git
+   git clone https://github.com/Gui11epio/Sprint1-C-.git
    
 
 2. **Vá até "lauchSettings.json"**

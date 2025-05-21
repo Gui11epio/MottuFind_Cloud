@@ -62,7 +62,15 @@ Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, tenta re
 
    ![image](https://github.com/user-attachments/assets/70c5914a-b683-406a-ac77-849e88a52bc9)
 
-4. **Rode o programa e o Swagger abrirá sozinho**
+4. **Abra a terminal no projeto e coloque as mesmas informações do Oracle**
+   ```bash
+   $env:DEFAULT_CONNECTION = "User Id=xxxxxxx;Password=xxxxxx;Data Source=xxxxxxxxxxxx:1521/ORCL"
+
+5. **Ainda na terminal, rode este comando para criar as tabelas em seu banco de dados:**
+   ```bash
+   dotnet ef database update
+
+6. **Após tudo isso, rode o programa e o Swagger abrirá sozinho**
 
 
 ## 📬JSON de Teste

@@ -71,6 +71,8 @@ Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, tenta re
    dotnet ef database update
 
 6. **Após tudo isso, rode o programa e o Swagger abrirá sozinho**
+   ```bash
+   https://localhost:7117/swagger
 
 
 ## 📬JSON de Teste

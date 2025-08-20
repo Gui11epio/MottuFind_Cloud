@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public string Largura { get; set; }
-        public string Comprimento { get; set; }
+        //public string Largura { get; set; }
+        //public string Comprimento { get; set; }
 
         // Relacionamento com a tabela de Filiais(Many to one)
         public int FilialId { get; set; }

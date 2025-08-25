@@ -81,7 +81,6 @@ Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, tenta re
   
 ```bash
 {
-  "nome": "Filial Centro-SP",
   "cidade": "São Paulo",
   "pais": "Brasil"
 }
@@ -92,8 +91,6 @@ Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, tenta re
 ```bash
 {
   "nome": "Pátio A1",
-  "largura": "50.0",
-  "comprimento": "120.0",
   "filialId": 1
 }
 ```

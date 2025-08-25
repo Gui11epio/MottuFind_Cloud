@@ -26,7 +26,7 @@ namespace Sprint1_C_
             {
                 var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
                 if (string.IsNullOrWhiteSpace(connectionString))
-                    throw new Exception("A variável de ambiente DEFAULT_CONNECTION não está definida.");
+                    throw new Exception("A variï¿½vel de ambiente DEFAULT_CONNECTION nï¿½o estï¿½ definida.");
 
                 options.UseOracle(connectionString);
             });
@@ -37,6 +37,7 @@ namespace Sprint1_C_
             builder.Services.AddScoped<MotoService>();
             builder.Services.AddScoped<FilialService>();
             builder.Services.AddScoped<PatioService>();
+            builder.Services.AddScoped<UsuarioService>();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 

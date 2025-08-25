@@ -12,6 +12,7 @@ namespace Sprint1_C_.Infrastructure.Data
         public DbSet<Moto> Moto { get; set; }
         public DbSet<Patio> Patio { get; set; }
         public DbSet<Filial> Filial { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
         public DbSet<TagRfid> TagRfid { get; set; }
         public DbSet<LeitorRfid> LeitorRfid { get; set; }
         public DbSet<LeituraRfid> LeituraRfid { get; set; }
@@ -21,6 +22,7 @@ namespace Sprint1_C_.Infrastructure.Data
             modelBuilder.Entity<Moto>().ToTable("TB_MOTOS");
             modelBuilder.Entity<Patio>().ToTable("TB_PATIOS");
             modelBuilder.Entity<Filial>().ToTable("TB_FILIAIS");
+            modelBuilder.Entity<Usuario>().ToTable("TB_USUARIO");
             modelBuilder.Entity<TagRfid>().ToTable("TB_TAGS_RFID");
             modelBuilder.Entity<LeitorRfid>().ToTable("TB_LEITORES_RFID");
             modelBuilder.Entity<LeituraRfid>().ToTable("TB_LEITURAS_RFID");

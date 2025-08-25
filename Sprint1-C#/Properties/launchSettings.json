@@ -27,7 +27,7 @@
       "applicationUrl": "https://localhost:7117;http://localhost:5288",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development",
-            "DEFAULT_CONNECTION": "User Id=xxxxxx;Password=xxxxxx;Data Source=xxxxxxxxxxxxxxx:1521/ORCL"
+            "DEFAULT_CONNECTION": "User Id=rm554894;Password=020306;Data Source=oracle.fiap.com.br:1521/ORCL"
         }
     },
     "IIS Express": {

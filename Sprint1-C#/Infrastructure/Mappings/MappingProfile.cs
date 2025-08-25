@@ -22,6 +22,10 @@ namespace Sprint1_C_.Mappings
             // Patio
             CreateMap<PatioRequest, Patio>();
             CreateMap<Patio, PatioResponse>();
+            
+            //Usuario
+            CreateMap<UsuarioRequest, Usuario>();
+            CreateMap<Usuario, UsuarioResponse>();
 
             
         }

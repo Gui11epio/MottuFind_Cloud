@@ -2,9 +2,8 @@
 {
     public enum MotoStatus
     {
-        LIGADO,
-        DESLIGADO,
         MANUTENCAO,
         DISPONIVEL,
+        INDISPONIVEL
     }
 }

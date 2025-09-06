@@ -10,14 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Infrastructure\Repositories\**" />
-    <Content Remove="Infrastructure\Repositories\**" />
-    <EmbeddedResource Remove="Infrastructure\Repositories\**" />
-    <None Remove="Infrastructure\Repositories\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.13">
       <PrivateAssets>all</PrivateAssets>
@@ -34,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\MottuFind_C_.Application\MottuFind_C_.Application.csproj" />
   </ItemGroup>
 
 </Project>

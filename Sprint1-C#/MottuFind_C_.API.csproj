@@ -28,6 +28,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MottuFind_C_.Application\MottuFind_C_.Application.csproj" />
+    <ProjectReference Include="..\MottuFind_C_.Domain\MottuFind_C_.Domain.csproj" />
+    <ProjectReference Include="..\MottuFind_C_.Infrastructure\MottuFind_C_.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

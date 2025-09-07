@@ -1,6 +1,8 @@
 
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using MottuFind_C_.Domain.Repositories;
+using MottuFind_C_.Infrastructure.Repositories;
 using Sprint1_C_.Application.Services;
 using Sprint1_C_.Infrastructure.Data;
 using Sprint1_C_.Mappings;
@@ -33,10 +35,16 @@ namespace Sprint1_C_
 
 
 
-
+            builder.Services.AddScoped<IMotoRepository, MotoRepository>();
             builder.Services.AddScoped<MotoService>();
+
+            builder.Services.AddScoped<IFilialRepository, FilialRepository>();
             builder.Services.AddScoped<FilialService>();
+
+            builder.Services.AddScoped<IPatioRepository, PatioRepository>();
             builder.Services.AddScoped<PatioService>();
+
+            builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             builder.Services.AddScoped<UsuarioService>();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));

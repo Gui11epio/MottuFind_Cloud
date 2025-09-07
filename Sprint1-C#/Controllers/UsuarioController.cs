@@ -9,7 +9,6 @@ namespace Sprint1_C_.Controllers
     [Route("api/[controller]")]
     public class UsuarioController : ControllerBase
     {
-    
         private readonly UsuarioService _usuarioService;
 
         public UsuarioController(UsuarioService service)
@@ -20,15 +19,20 @@ namespace Sprint1_C_.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<UsuarioResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult GetAll() => Ok(_usuarioService.ObterTodos());
+        public async Task<IActionResult> GetAll()
+        {
+            var usuarios = await _usuarioService.ObterTodos();
+            if (usuarios == null || !usuarios.Any()) return NoContent();
+            return Ok(usuarios);
+        }
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(UsuarioResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var usuario = _usuarioService.ObterPorId(id);
+            var usuario = await _usuarioService.ObterPorId(id);
             if (usuario == null) return NotFound();
             return Ok(usuario);
         }
@@ -45,11 +49,11 @@ namespace Sprint1_C_.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(UsuarioResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Create([FromBody] UsuarioRequest request)
+        public async Task<IActionResult> Create([FromBody] UsuarioRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var created = _usuarioService.Criar(request);
+            var created = await _usuarioService.Criar(request);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
@@ -57,22 +61,24 @@ namespace Sprint1_C_.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Update(int id, [FromBody] UsuarioRequest request)
+        public async Task<IActionResult> Update(int id, [FromBody] UsuarioRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var updated = _usuarioService.Atualizar(id, request);
+            var updated = await _usuarioService.Atualizar(id, request);
             if (!updated) return NotFound();
+
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var deleted = _usuarioService.Remover(id);
+            var deleted = await _usuarioService.Remover(id);
             if (!deleted) return NotFound();
+
             return NoContent();
         }
     }

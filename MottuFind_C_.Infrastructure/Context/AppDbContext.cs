@@ -27,15 +27,22 @@ namespace Sprint1_C_.Infrastructure.Data
             modelBuilder.Entity<LeitorRfid>().ToTable("TB_LEITORES_RFID");
             modelBuilder.Entity<LeituraRfid>().ToTable("TB_LEITURAS_RFID");
 
-            // Relacionamentos aqui...
-
 
             modelBuilder.Entity<Moto>(entity =>
             {
                 entity.ToTable("TB_MOTOS");
 
-                entity.HasKey(m => m.Placa);
-                entity.Property(m => m.Placa).HasColumnName("Placa");
+                // Configura Placa como Value Object (Owned)
+                entity.OwnsOne(m => m.Placa, placa =>
+                {
+                    placa.Property(p => p.Numero)
+                         .HasColumnName("Placa")
+                         .HasMaxLength(8)
+                         .IsRequired();
+                });
+
+                entity.HasKey("Placa");
+
                 entity.Property(m => m.Modelo).HasColumnName("Modelo");
                 entity.Property(m => m.Marca).HasColumnName("Marca");
                 entity.Property(m => m.Status).HasColumnName("Status");
@@ -67,7 +74,7 @@ namespace Sprint1_C_.Infrastructure.Data
                 entity.HasOne(t => t.Moto)
                     .WithOne(m => m.TagRfid)
                     .HasForeignKey<TagRfid>(t => t.MotoPlaca)
-                    .HasPrincipalKey<Moto>(m => m.Placa);
+                    .HasPrincipalKey<Moto>("Placa");
             });
 
 

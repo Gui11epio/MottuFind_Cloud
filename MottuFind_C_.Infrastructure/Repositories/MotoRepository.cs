@@ -30,7 +30,7 @@ namespace MottuFind_C_.Infrastructure.Repositories
         {
             return await _context.Moto
                 .Include(m => m.TagRfid)
-                .FirstOrDefaultAsync(m => m.Placa == placa);
+                .FirstOrDefaultAsync(m => m.Placa.Numero == placa);
         }
 
         public async Task<(List<Moto> Itens, int Total)> ObterPorPaginaAsync(int numeroPag, int tamanhoPag)

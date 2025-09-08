@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace MottuFind_C_.Domain.VO
 {
-    public class Placa
+    public class VOPlaca
     {
         public string Numero { get; private set; }
 
-        protected Placa() { } // EF Core exige construtor vazio
+        protected VOPlaca() { }
 
-        public Placa(string numero)
+        public VOPlaca(string numero)
         {
             if (string.IsNullOrWhiteSpace(numero))
                 throw new ArgumentException("Placa não pode ser vazia");
@@ -29,7 +29,7 @@ namespace MottuFind_C_.Domain.VO
 
         public override bool Equals(object obj)
         {
-            if (obj is not Placa other) return false;
+            if (obj is not VOPlaca other) return false;
             return Numero == other.Numero;
         }
 

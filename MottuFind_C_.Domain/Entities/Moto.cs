@@ -9,7 +9,7 @@ namespace Sprint1_C_.Domain.Entities
     public class Moto
     {
         [Key]
-        public Placa Placa { get; set; }
+        public VOPlaca Placa { get; private set; }
         public MotoModelo Modelo { get; set; }
         public string Marca { get; set; }
         public MotoStatus Status { get; set; }
@@ -22,7 +22,7 @@ namespace Sprint1_C_.Domain.Entities
 
         protected Moto() { } // EF Core
 
-        public Moto(Placa placa, MotoModelo modelo, string marca, MotoStatus status, int patioId)
+        public Moto(VOPlaca placa, MotoModelo modelo, string marca, MotoStatus status, int patioId)
         {
             Placa = placa;
             Modelo = modelo;

@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Sprint1_C_</RootNamespace>
+    <RootNamespace>MottuFind</RootNamespace>
     <UserSecretsId>db795f33-ceff-4b93-92ac-1b770921cdd1</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>

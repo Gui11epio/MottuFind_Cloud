@@ -12,10 +12,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Sprint1-C#/MottuFind_C_.csproj", "Sprint1-C#/"]
-RUN dotnet restore "./Sprint1-C#/MottuFind_C_.csproj"
+COPY ["MottuFind/MottuFind_C_.csproj", "MottuFind/"]
+RUN dotnet restore "./MottuFind/MottuFind_C_.csproj"
 COPY . .
-WORKDIR "/src/Sprint1-C#"
+WORKDIR "/src/MottuFind"
 RUN dotnet build "./MottuFind_C_.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final

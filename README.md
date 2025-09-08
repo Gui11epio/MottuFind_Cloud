@@ -63,6 +63,8 @@ A TagRfid é criada automaticamente quando uma moto é cadastrada.
 2. **Vá até "lauchSettings.json"**
    
    <img width="412" height="167" alt="image" src="https://github.com/user-attachments/assets/5f3c5fa2-cff7-4fa2-9300-9a0e745c5a24" />
+   
+- Nota: Clique com o botão direito em cima de **MottuFind_C_.API** e defina ele como projeto de inicialização, se ainda não estiver 
 
 
 3. **Coloque suas informações do Banco de Dados Oracle**

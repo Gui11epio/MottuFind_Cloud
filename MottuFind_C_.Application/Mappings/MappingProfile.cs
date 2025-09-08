@@ -9,21 +9,21 @@ namespace Sprint1_C_.Mappings
     {
         public MappingProfile()
         {
-            // Moto
+            
             CreateMap<MotoRequest, Moto>();
             CreateMap<Moto, MotoResponse>()
                 .ForMember(dest => dest.TagRfidId, opt => opt.MapFrom(src => src.TagRfid.Id))
                 .ForMember(dest => dest.CodigoIdentificacao, opt => opt.MapFrom(src => src.TagRfid.CodigoIdentificacao));
 
-            // Filial
+            
             CreateMap<FilialRequest, Filial>();
             CreateMap<Filial, FilialResponse>();
 
-            // Patio
+            
             CreateMap<PatioRequest, Patio>();
             CreateMap<Patio, PatioResponse>();
 
-            //Usuario
+            
             CreateMap<UsuarioRequest, Usuario>();
             CreateMap<Usuario, UsuarioResponse>();
 

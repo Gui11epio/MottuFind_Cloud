@@ -6,10 +6,10 @@ namespace Sprint1_C_.Domain.Entities
     {
         public int Id { get; set; }
 
-        public DateTime DataHora { get; set; } // Momento da leitura
+        public DateTime DataHora { get; set; }
 
         // Relação com a tabela de Leitor RFID(Many to one)
-        public int LeitorId { get; set; } // Chave estrangeira para a tabela de Leitores RFID
+        public int LeitorId { get; set; }
         public LeitorRfid Leitor { get; set; }
 
         // Relação com a tabela de TagRfid(Many to one)

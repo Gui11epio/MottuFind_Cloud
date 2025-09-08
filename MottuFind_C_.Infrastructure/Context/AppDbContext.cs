@@ -32,17 +32,8 @@ namespace Sprint1_C_.Infrastructure.Data
             {
                 entity.ToTable("TB_MOTOS");
 
-                // Configura Placa como Value Object (Owned)
-                entity.OwnsOne(m => m.Placa, placa =>
-                {
-                    placa.Property(p => p.Numero)
-                         .HasColumnName("Placa")
-                         .HasMaxLength(8)
-                         .IsRequired();
-                });
-
-                entity.HasKey("Placa");
-
+                entity.HasKey(m => m.Placa);
+                entity.Property(m => m.Placa).HasColumnName("Placa");
                 entity.Property(m => m.Modelo).HasColumnName("Modelo");
                 entity.Property(m => m.Marca).HasColumnName("Marca");
                 entity.Property(m => m.Status).HasColumnName("Status");
@@ -74,7 +65,7 @@ namespace Sprint1_C_.Infrastructure.Data
                 entity.HasOne(t => t.Moto)
                     .WithOne(m => m.TagRfid)
                     .HasForeignKey<TagRfid>(t => t.MotoPlaca)
-                    .HasPrincipalKey<Moto>("Placa");
+                    .HasPrincipalKey<Moto>(m => m.Placa);
             });
 
 

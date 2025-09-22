@@ -12,19 +12,22 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["MottuFind/MottuFind_C_.csproj", "MottuFind/"]
-RUN dotnet restore "./MottuFind/MottuFind_C_.csproj"
+COPY ["MottuFind/MottuFind_C_.API.csproj", "MottuFind/"]
+COPY ["MottuFind_C_.Application/MottuFind_C_.Application.csproj", "MottuFind_C_.Application/"]
+COPY ["MottuFind_C_.Domain/MottuFind_C_.Domain.csproj", "MottuFind_C_.Domain/"]
+COPY ["MottuFind_C_.Infrastructure/MottuFind_C_.Infrastructure.csproj", "MottuFind_C_.Infrastructure/"]
+RUN dotnet restore "./MottuFind/MottuFind_C_.API.csproj"
 COPY . .
 WORKDIR "/src/MottuFind"
-RUN dotnet build "./MottuFind_C_.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./MottuFind_C_.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./MottuFind_C_.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./MottuFind_C_.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Esta fase é usada na produção ou quando executada no VS no modo normal (padrão quando não está usando a configuração de Depuração)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MottuFind_C_.dll"]
+ENTRYPOINT ["dotnet", "MottuFind_C_.API.dll"]

@@ -72,15 +72,22 @@ A TagRfid é criada automaticamente quando uma moto é cadastrada.
    <img width="995" height="251" alt="image" src="https://github.com/user-attachments/assets/3815d7d0-6038-48f9-84e4-5b16fc378e18" />
 
 
-4. **Abra a terminal no projeto e coloque as mesmas informações do Oracle**
+4. **Abra a terminal na raiz do projeto e coloque as mesmas informações do Oracle**
    ```bash
    $env:DEFAULT_CONNECTION = "User Id=xxxxxxx;Password=xxxxxx;Data Source=xxxxxxxxxxxx:1521/ORCL"
 
 5. **Ainda na terminal, rode este comando para criar as tabelas em seu banco de dados:**
+
+   - Para criar uma migration
+   ```bash
+   dotnet ef migrations add ClassesNovas  --project .\MottuFind_C_.Infrastructure\MottuFind_C_.Infrastructure.csproj  --startup-project .\MottuFind\MottuFind_C_.API.csproj  --context AppDbContext
+   ```
+   - Para poder criar as tabelas
    ```bash
    dotnet ef database update --project .\MottuFind_C_.Infrastructure\MottuFind_C_.Infrastructure.csproj --startup-project .\MottuFind\MottuFind_C_.API.csproj --context AppDbContext
+   ```
 
-6. **Após tudo isso, rode o programa e o Swagger abrirá sozinho**
+7. **Após tudo isso, rode o programa e o Swagger abrirá sozinho**
    ```bash
    https://localhost:7117/swagger
 

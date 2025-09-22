@@ -27,6 +27,12 @@ namespace Sprint1_C_.Mappings
             CreateMap<UsuarioRequest, Usuario>();
             CreateMap<Usuario, UsuarioResponse>();
 
+            CreateMap<LeitorRfidRequest, LeitorRfid>();
+            CreateMap<LeitorRfid, LeitorRfidResponse>();
+
+            CreateMap<LeituraRfidRequest, LeituraRfid>();
+            CreateMap<LeituraRfid, LeituraRfidResponse>();
+
 
         }
     }

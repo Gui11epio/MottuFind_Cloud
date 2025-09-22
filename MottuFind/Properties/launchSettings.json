@@ -16,7 +16,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DEFAULT_CONNECTION": "User Id=xxxxxxxxxx;Password=xxxxxxxx;Data Source=xxxxxxxxxxxxx:1521/ORCL"
+        "DEFAULT_CONNECTION": "User Id=xxxxxxxxx;Password=xxxxxxxx;Data Source=xxxxxxxxxxxxxxxxxxxxxx/ORCL"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7117;http://localhost:5288"

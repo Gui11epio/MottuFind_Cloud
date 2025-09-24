@@ -57,7 +57,7 @@ A TagRfid é criada automaticamente quando uma moto é cadastrada.
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/Gui11epio/CP_C--MottuFind.git
+   https://github.com/Gui11epio/MottuFind_C.git
    
 
 2. **Vá até "lauchSettings.json"**

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MottuFind_C_.Domain.Entities;
 using Sprint1_C_.Application.DTOs.Requests;
 using Sprint1_C_.Application.DTOs.Response;
 using Sprint1_C_.Application.Services;
@@ -27,23 +28,66 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(FilialResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Resource<FilialResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
             var filial = await _filialService.ObterPorId(id);
             if (filial == null) return NotFound();
-            return Ok(filial);
+
+
+            var resource = new Resource<FilialResponse>
+            {
+                Data = filial,
+                Links =
+        {
+                    new Link { Href = Url.Action(nameof(GetById), new { id }), Rel = "self", Method = "GET" },
+                    new Link { Href = Url.Action(nameof(Update), new { id }), Rel = "update", Method = "PUT" },
+                    new Link { Href = Url.Action(nameof(Delete), new { id }), Rel = "delete", Method = "DELETE" },
+                    new Link { Href = Url.Action(nameof(GetAll)), Rel = "all", Method = "GET" }
+        }
+            };
+
+
+            return Ok(resource);
         }
 
         [HttpGet("pagina")]
-        [ProducesResponseType(typeof(PagedResult<FilialResponse>), StatusCodes.Status200OK)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Resource<PagedResult<FilialResponse>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<PagedResult<FilialResponse>>> GetPaged(int numeroPag = 1, int tamanhoPag = 10)
+        public async Task<ActionResult<Resource<PagedResult<FilialResponse>>>> GetPaged(int numeroPag = 1, int tamanhoPag = 10)
         {
             var result = await _filialService.ObterPorPagina(numeroPag, tamanhoPag);
-            return Ok(result);
+            if (result.Itens == null || !result.Itens.Any()) return NoContent();
+
+            var resource = new Resource<PagedResult<FilialResponse>>
+            {
+                Data = result,
+                Links =
+        {
+            new Link { Href = Url.Action(nameof(GetPaged), new { numeroPag, tamanhoPag }), Rel = "self", Method = "GET" }
+        }
+            };
+
+            // adiciona links de próxima e anterior se aplicável
+            if ((numeroPag * tamanhoPag) < result.Total)
+                resource.Links.Add(new Link
+                {
+                    Href = Url.Action(nameof(GetPaged), new { numeroPag = numeroPag + 1, tamanhoPag }),
+                    Rel = "next",
+                    Method = "GET"
+                });
+
+            if (numeroPag > 1)
+                resource.Links.Add(new Link
+                {
+                    Href = Url.Action(nameof(GetPaged), new { numeroPag = numeroPag - 1, tamanhoPag }),
+                    Rel = "prev",
+                    Method = "GET"
+                });
+            return Ok(resource);
         }
 
         [HttpPost]

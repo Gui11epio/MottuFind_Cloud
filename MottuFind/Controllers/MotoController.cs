@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MottuFind_C_.Domain.Entities;
 using Sprint1_C_.Application.DTOs.Requests;
 using Sprint1_C_.Application.DTOs.Response;
 using Sprint1_C_.Application.Services;
+using Sprint1_C_.Domain.Entities;
 
 namespace Sprint1_C_.Controllers
 {
@@ -27,7 +29,7 @@ namespace Sprint1_C_.Controllers
         }
 
         [HttpGet("placa")]
-        [ProducesResponseType(typeof(MotoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Resource<MotoResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByPlaca([FromQuery] string valor)
@@ -35,16 +37,58 @@ namespace Sprint1_C_.Controllers
             var moto = await _motoService.ObterPorPlaca(valor);
             if (moto == null)
                 return NotFound();
-            return Ok(moto);
+
+            var resource = new Resource<MotoResponse>
+            {
+                Data = moto,
+                Links =
+        {
+                    new Link { Href = Url.Action(nameof(GetByPlaca), new { valor }), Rel = "self", Method = "GET" },
+                    new Link { Href = Url.Action(nameof(Update), new { valor }), Rel = "update", Method = "PUT" },
+                    new Link { Href = Url.Action(nameof(Delete), new { valor }), Rel = "delete", Method = "DELETE" },
+                    new Link { Href = Url.Action(nameof(GetAll)), Rel = "all", Method = "GET" }
+        }
+            };
+
+            return Ok(resource);
         }
 
         [HttpGet("pagina")]
-        [ProducesResponseType(typeof(PagedResult<MotoResponse>), StatusCodes.Status200OK)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Resource<PagedResult<MotoResponse>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<PagedResult<MotoResponse>>> GetPaged(int numeroPag = 1, int tamanhoPag = 10)
+        public async Task<ActionResult<Resource<PagedResult<MotoResponse>>>> GetPaged(int numeroPag = 1, int tamanhoPag = 10)
         {
             var result = await _motoService.ObterPorPagina(numeroPag, tamanhoPag);
-            return Ok(result);
+
+            var resource = new Resource<PagedResult<MotoResponse>>
+            {
+                Data = result,
+                Links =
+                {
+                    new Link { Href = Url.Action(nameof(GetPaged), new { numeroPag, tamanhoPag }), Rel = "self", Method = "GET" }
+                }
+            };
+
+            // adiciona links de próxima e anterior se aplicável
+            if ((numeroPag * tamanhoPag) < result.Total)
+                resource.Links.Add(new Link
+                {
+                    Href = Url.Action(nameof(GetPaged), new { numeroPag = numeroPag + 1, tamanhoPag }),
+                    Rel = "next",
+                    Method = "GET"
+                });
+
+            if (numeroPag > 1)
+                resource.Links.Add(new Link
+                {
+                    Href = Url.Action(nameof(GetPaged), new { numeroPag = numeroPag - 1, tamanhoPag }),
+                    Rel = "prev",
+                    Method = "GET"
+                });
+
+
+            return Ok(resource);
         }
 
         [HttpPost]

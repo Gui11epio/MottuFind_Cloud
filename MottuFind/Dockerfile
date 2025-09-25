@@ -9,9 +9,6 @@ ARG APP_GID=1000
 RUN addgroup --gid $APP_GID appgroup \
     && adduser --disabled-password --gecos "" --uid $APP_UID --gid $APP_GID appuser
 
-# Troca para o novo usuário
-USER appuser
-
 
 USER $APP_UID
 WORKDIR /app
@@ -41,4 +38,6 @@ RUN dotnet publish "./MottuFind_C_.API.csproj" -c $BUILD_CONFIGURATION -o /app/p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+# Troca para o novo usuário
+USER appuser
 ENTRYPOINT ["dotnet", "MottuFind_C_.API.dll"]

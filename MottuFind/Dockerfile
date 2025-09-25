@@ -7,9 +7,9 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Cria um usuário e grupo sem privilégios administrativos
-RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
-USER appuser         
+# Criar usuário não-root
+RUN adduser --disabled-password --gecos "" appuser
+USER appuser        
 
 # Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build

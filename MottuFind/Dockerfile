@@ -2,14 +2,22 @@
 
 # Esta fase é usada durante a execução no VS no modo rápido (Padrão para a configuração de Depuração)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
+# Cria um usuário não-root
+ARG APP_UID=1000
+ARG APP_GID=1000
+RUN addgroup --gid $APP_GID appgroup \
+    && adduser --disabled-password --gecos "" --uid $APP_UID --gid $APP_GID appuser
+
+# Troca para o novo usuário
+USER appuser
+
+
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Criar usuário não-root
-RUN adduser --disabled-password --gecos "" appuser
-USER appuser        
 
 # Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build

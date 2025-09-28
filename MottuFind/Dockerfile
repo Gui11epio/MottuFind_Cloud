@@ -4,10 +4,9 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
 # Cria um usuário não-root com UID/GID menos comum
-ARG APP_UID=1650
-ARG APP_GID=1650
-RUN addgroup --gid $APP_GID appgroup \
-    && adduser --disabled-password --gecos "" --uid $APP_UID --gid $APP_GID appuser
+# Cria usuário não-root sem UID fixo
+RUN addgroup --system appgroup && adduser --system --disabled-password --group appuser
+
 
 
 USER $APP_UID

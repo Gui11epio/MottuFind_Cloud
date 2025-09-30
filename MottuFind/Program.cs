@@ -27,9 +27,9 @@ namespace Sprint1_C_
             {
                 var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
                 if (string.IsNullOrWhiteSpace(connectionString))
-                    throw new Exception("A vari�vel de ambiente DEFAULT_CONNECTION n�o est� definida.");
+                    throw new Exception("A variável de ambiente DEFAULT_CONNECTION não está definida.");
 
-                options.UseOracle(connectionString);
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
             });
 
 

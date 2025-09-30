@@ -18,7 +18,7 @@ namespace MottuFind_C_.Infrastructure.Context
             
             var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
 
-            optionsBuilder.UseOracle(connectionString);
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
             return new AppDbContext(optionsBuilder.Options);
         }

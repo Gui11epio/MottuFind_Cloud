@@ -1,38 +1,54 @@
-# Acesse https://aka.ms/customizecontainer para saber como personalizar seu contêiner de depuração e como o Visual Studio usa este Dockerfile para criar suas imagens para uma depuração mais rápida.
-
-# Esta fase é usada durante a execução no VS no modo rápido (Padrão para a configuração de Depuração)
+# -----------------------------
+# Fase base (runtime)
+# -----------------------------
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
-# Cria usuário não-root sem UID fixo
+# Cria usuário não-root
 RUN addgroup --system mottu && adduser --system --disabled-password --ingroup mottu mottu
 
-USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-
-# Esta fase é usada para compilar o projeto de serviço
+# -----------------------------
+# Fase de build
+# -----------------------------
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
+# Copia os arquivos .csproj de cada camada
 COPY ["MottuFind/MottuFind_C_.API.csproj", "MottuFind/"]
 COPY ["MottuFind_C_.Application/MottuFind_C_.Application.csproj", "MottuFind_C_.Application/"]
 COPY ["MottuFind_C_.Domain/MottuFind_C_.Domain.csproj", "MottuFind_C_.Domain/"]
 COPY ["MottuFind_C_.Infrastructure/MottuFind_C_.Infrastructure.csproj", "MottuFind_C_.Infrastructure/"]
-RUN dotnet restore "./MottuFind/MottuFind_C_.API.csproj"
-COPY . .
-WORKDIR "/src/MottuFind"
-RUN dotnet build "./MottuFind_C_.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
+# Restaura dependências
+RUN dotnet restore "MottuFind/MottuFind_C_.API.csproj"
+
+# Copia todo o código
+COPY . .
+
+# Compila a API
+WORKDIR "/src/MottuFind"
+RUN dotnet build "MottuFind_C_.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+# -----------------------------
+# Fase de publicação
+# -----------------------------
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./MottuFind_C_.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "MottuFind_C_.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Esta fase é usada na produção ou quando executada no VS no modo normal (padrão quando não está usando a configuração de Depuração)
+# -----------------------------
+# Fase final (produção)
+# -----------------------------
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Define usuário não-root
 USER mottu
+
+# Entry point
 ENTRYPOINT ["dotnet", "MottuFind_C_.API.dll"]

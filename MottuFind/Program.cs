@@ -15,13 +15,9 @@ namespace Sprint1_C_
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
-
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
@@ -32,23 +28,17 @@ namespace Sprint1_C_
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
             });
 
-
-
+            // Registro dos serviços
             builder.Services.AddScoped<IMotoRepository, MotoRepository>();
             builder.Services.AddScoped<MotoService>();
-
             builder.Services.AddScoped<IFilialRepository, FilialRepository>();
             builder.Services.AddScoped<FilialService>();
-
             builder.Services.AddScoped<IPatioRepository, PatioRepository>();
             builder.Services.AddScoped<PatioService>();
-
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             builder.Services.AddScoped<UsuarioService>();
-
             builder.Services.AddScoped<ILeitorRfidRepository, LeitorRfidRepository>();
             builder.Services.AddScoped<LeitorRfidService>();
-
             builder.Services.AddScoped<ILeituraRfidRepository, LeituraRfidRepository>();
             builder.Services.AddScoped<LeituraRfidService>();
 
@@ -56,28 +46,23 @@ namespace Sprint1_C_
 
             builder.Services.AddControllers()
                 .AddJsonOptions(opt => {
-                                opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
-
-
 
             var app = builder.Build();
 
-
-            
-            if (app.Environment.IsDevelopment())
+            // Habilita Swagger sempre, mesmo em Production (somente para testes)
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MottuFind API V1");
+            });
 
-            app.UseHttpsRedirection();
+            // Remova o HTTPS redirection para rodar no ACI via HTTP
+            // app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }

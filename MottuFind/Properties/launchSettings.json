@@ -16,7 +16,7 @@
       "launchUrl": "swagger",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development",
-            "DEFAULT_CONNECTION": "server=localhost;port=3306;database=MottuFindDB;user=root;password=SenhaLocal123!"
+            "DEFAULT_CONNECTION": "Server=mottu-mysql-server.mysql.database.azure.com;Database=mottudb;User ID=mottuadmin@mottu-mysql-server;Password=SenhaForte123!;SslMode=Preferred;"
         },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7117;http://localhost:5288"

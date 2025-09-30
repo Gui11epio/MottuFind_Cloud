@@ -4,7 +4,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
 # Cria usuário não-root sem UID fixo
-RUN addgroup --system appgroup && adduser --system --disabled-password --group appuser
+RUN addgroup --system mottu && adduser --system --disabled-password --ingroup mottu mottu
 
 USER $APP_UID
 WORKDIR /app
@@ -34,5 +34,5 @@ RUN dotnet publish "./MottuFind_C_.API.csproj" -c $BUILD_CONFIGURATION -o /app/p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-USER appuser
+USER mottu
 ENTRYPOINT ["dotnet", "MottuFind_C_.API.dll"]

@@ -1,22 +1,24 @@
 # Sprint 3
 
-📌 Descrição do Projeto
-
-Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, tenta representar uma solução de monitoramento de motos por meio de Rfid, com objetivo de gerenciar entidades como Motos, Filiais e Pátios.
-
-Também tem usuários, mas não está com as funcionalidades completas. 
-
-A aplicação implementa operações básicas de CRUD (Create, Read, Update, Delete), segue uma arquitetura em camadas (Controllers, Application, Domain, Infrastructure), segue os príncipios de DDD e Clean Code.
-
-A TagRfid é criada automaticamente quando uma moto é cadastrada.
-
-## 👥 Nome e RM dos Integrantes
+### 👥 Nome e RM dos Integrantes
 
 - Guilherme Camasmie Laiber de Jesus – RM554894
 
 - Fernando Fernandes Prado – RM557982
 
 - Pedro Manzo Yokoo – RM556115
+
+### 📌 Descrição do Projeto
+
+Este projeto consiste em uma API RESTful desenvolvida com ASP.NET Core, tenta representar uma solução de monitoramento de motos por meio de Rfid, com objetivo de gerenciar entidades como Motos, Filiais, Pátios, Usuários, LeitorRFID e LeituraRFID. 
+
+A TagRfid é criada automaticamente quando uma moto é cadastrada.
+
+### 📌 Arquitetura do Projeto
+
+A aplicação implementa operações básicas de CRUD (Create, Read, Update, Delete), segue uma arquitetura em camadas (Controllers, Application, Domain, Infrastructure), segue os príncipios de DDD e Clean Code.
+
+Com o objetivo de deixar a aplicação mais organizada e destribuir as responsabilidades
 
 ## 🚀 Rotas Disponíveis
 
@@ -39,7 +41,7 @@ A TagRfid é criada automaticamente quando uma moto é cadastrada.
 - `DELETE /api/Moto/placa`  
   Deleta os dados de uma moto pela placa.
 
-> Os outros controllers (`FilialController`, `PatioController` e `UsuarioController`) seguem estrutura semelhante com operações básicas de CRUD.
+> Os outros controllers (`FilialController`, `PatioController`, `UsuarioController`, `LeitorRFIDController` e `LeituraRFIDController`) seguem estrutura semelhante com operações básicas de CRUD.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -52,6 +54,8 @@ A TagRfid é criada automaticamente quando uma moto é cadastrada.
 - AutoMapper
 - Migrations
 - DataAnnotations
+- Pagination
+- HATEOAS
 
 ## ▶️ Instruções de Execução
 
@@ -143,12 +147,38 @@ A TagRfid é criada automaticamente quando uma moto é cadastrada.
   "setores": "MECANICA",
   "nomeUsuario": "Roberto",
   "email": "roberto@gmail.com",
-  "senha": "rob123@!"
+  "senha": "roB123@!"
 }
 ```
 🔤 Setores deve conter:
 
 - Setores: "MECANICA" ou "GARAGEM"
+
+
+#
+
+- LeitorRFID
+```bash
+{
+  "localizacao": "Portão Principal A",
+  "ipDispositivo": "192.168.1.100",
+  "patioId": 1
+}
+```
+
+#
+
+- LeituraRFID
+```bash
+{
+  
+  "dataHora": "2025-01-15T14:30:00",
+  "leitorId": 1,
+  "tagRfidId": 1
+}
+
+```
+
 
 
 

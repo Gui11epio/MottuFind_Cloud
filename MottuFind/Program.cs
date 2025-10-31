@@ -25,7 +25,7 @@ namespace Sprint1_C_
                 if (string.IsNullOrWhiteSpace(connectionString))
                     throw new Exception("A variável de ambiente DEFAULT_CONNECTION não está definida.");
 
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                options.UseSqlServer(connectionString);
             });
 
             // Registro dos serviços

@@ -12,18 +12,18 @@ using Sprint1_C_.Infrastructure.Data;
 namespace MottuFind_C_.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250930215107_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251031192201_SqlServer")]
+    partial class SqlServer
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.17")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.Filial", b =>
                 {
@@ -31,15 +31,17 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Cidade")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Pais")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -52,15 +54,17 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("IpDispositivo")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Localizacao")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PatioId")
                         .HasColumnType("int");
@@ -78,10 +82,10 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DataHora")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("LeitorId")
                         .HasColumnType("int");
@@ -101,25 +105,27 @@ namespace MottuFind_C_.Infrastructure.Migrations
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.Moto", b =>
                 {
                     b.Property<string>("Placa")
-                        .HasColumnType("varchar(255)")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("Placa");
 
                     b.Property<string>("Marca")
                         .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("Marca");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Modelo")
-                        .HasColumnType("int")
-                        .HasColumnName("Modelo");
+                    b.Property<string>("Modelo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("PatioId")
-                        .HasColumnType("int")
-                        .HasColumnName("PatioId");
+                        .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int")
-                        .HasColumnName("Status");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Placa");
 
@@ -134,14 +140,15 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("FilialId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -154,20 +161,19 @@ namespace MottuFind_C_.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CodigoIdentificacao")
                         .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("CodigoIdentificacao");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("MotoPlaca")
                         .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("MotoPlaca");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -183,26 +189,31 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("NomeUsuario")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("Setor")
-                        .HasColumnType("int");
+                    b.Property<string>("Setor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TB_USUARIO", (string)null);
+                    b.ToTable("TB_USUARIOS", (string)null);
                 });
 
             modelBuilder.Entity("Sprint1_C_.Domain.Entities.LeitorRfid", b =>
@@ -210,8 +221,9 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.Patio", "Patio")
                         .WithMany("Leitores")
                         .HasForeignKey("PatioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_LEITORES_PATIOS");
 
                     b.Navigation("Patio");
                 });
@@ -221,14 +233,16 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.LeitorRfid", "Leitor")
                         .WithMany("Leituras")
                         .HasForeignKey("LeitorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_LEITURAS_LEITORES");
 
                     b.HasOne("Sprint1_C_.Domain.Entities.TagRfid", "TagRfid")
                         .WithMany()
                         .HasForeignKey("TagRfidId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_LEITURAS_TAGS");
 
                     b.Navigation("Leitor");
 
@@ -240,8 +254,9 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.Patio", "Patio")
                         .WithMany("Motos")
                         .HasForeignKey("PatioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_MOTOS_PATIOS");
 
                     b.Navigation("Patio");
                 });
@@ -252,7 +267,8 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         .WithMany("Patios")
                         .HasForeignKey("FilialId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_PATIOS_FILIAIS");
 
                     b.Navigation("Filial");
                 });
@@ -262,8 +278,9 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.Moto", "Moto")
                         .WithOne("TagRfid")
                         .HasForeignKey("Sprint1_C_.Domain.Entities.TagRfid", "MotoPlaca")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_TAGS_MOTOS");
 
                     b.Navigation("Moto");
                 });

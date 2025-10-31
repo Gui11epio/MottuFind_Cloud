@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -7,151 +6,130 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MottuFind_C_.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class SqlServer : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateTable(
                 name: "TB_FILIAIS",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Cidade = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Pais = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cidade = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Pais = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_FILIAIS", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
-                name: "TB_USUARIO",
+                name: "TB_USUARIOS",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Setor = table.Column<int>(type: "int", nullable: false),
-                    NomeUsuario = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Senha = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Setor = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NomeUsuario = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Senha = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_USUARIO", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                    table.PrimaryKey("PK_TB_USUARIOS", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "TB_PATIOS",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FilialId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_PATIOS", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_PATIOS_TB_FILIAIS_FilialId",
+                        name: "FK_PATIOS_FILIAIS",
                         column: x => x.FilialId,
                         principalTable: "TB_FILIAIS",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "TB_LEITORES_RFID",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Localizacao = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IpDispositivo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Localizacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IpDispositivo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PatioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_LEITORES_RFID", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_LEITORES_RFID_TB_PATIOS_PatioId",
+                        name: "FK_LEITORES_PATIOS",
                         column: x => x.PatioId,
                         principalTable: "TB_PATIOS",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateTable(
                 name: "TB_MOTOS",
                 columns: table => new
                 {
-                    Placa = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Modelo = table.Column<int>(type: "int", nullable: false),
-                    Marca = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Placa = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Modelo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Marca = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     PatioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_MOTOS", x => x.Placa);
                     table.ForeignKey(
-                        name: "FK_TB_MOTOS_TB_PATIOS_PatioId",
+                        name: "FK_MOTOS_PATIOS",
                         column: x => x.PatioId,
                         principalTable: "TB_PATIOS",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateTable(
                 name: "TB_TAGS_RFID",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CodigoIdentificacao = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    MotoPlaca = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CodigoIdentificacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    MotoPlaca = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_TAGS_RFID", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_TAGS_RFID_TB_MOTOS_MotoPlaca",
+                        name: "FK_TAGS_MOTOS",
                         column: x => x.MotoPlaca,
                         principalTable: "TB_MOTOS",
                         principalColumn: "Placa",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateTable(
                 name: "TB_LEITURAS_RFID",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    DataHora = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DataHora = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LeitorId = table.Column<int>(type: "int", nullable: false),
                     TagRfidId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -159,19 +137,18 @@ namespace MottuFind_C_.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_TB_LEITURAS_RFID", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_LEITURAS_RFID_TB_LEITORES_RFID_LeitorId",
+                        name: "FK_LEITURAS_LEITORES",
                         column: x => x.LeitorId,
                         principalTable: "TB_LEITORES_RFID",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TB_LEITURAS_RFID_TB_TAGS_RFID_TagRfidId",
+                        name: "FK_LEITURAS_TAGS",
                         column: x => x.TagRfidId,
                         principalTable: "TB_TAGS_RFID",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_LEITORES_RFID_PatioId",
@@ -212,7 +189,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                 name: "TB_LEITURAS_RFID");
 
             migrationBuilder.DropTable(
-                name: "TB_USUARIO");
+                name: "TB_USUARIOS");
 
             migrationBuilder.DropTable(
                 name: "TB_LEITORES_RFID");

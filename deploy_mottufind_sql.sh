@@ -23,7 +23,7 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 
 # --- Criar App Service Plan ---
 echo "🧱 Criando App Service Plan..."
-az appservice plan create   --name $PLAN_NAME   --resource-group $RESOURCE_GROUP   --sku B1   --is-linux
+az appservice plan create   --name $PLAN_NAME   --resource-group $RESOURCE_GROUP   --sku B1
 
 # --- Criar SQL Server ---
 echo "🗄️ Criando Servidor SQL..."
@@ -39,7 +39,7 @@ az sql server firewall-rule create   --resource-group $RESOURCE_GROUP   --server
 
 # --- Criar o App Service ---
 echo "🚀 Criando Web App..."
-az webapp create   --resource-group $RESOURCE_GROUP   --plan $PLAN_NAME   --name $APP_NAME   --runtime "DOTNETCORE:8.0"   --deployment-local-git
+az webapp create   --resource-group $RESOURCE_GROUP   --plan $PLAN_NAME   --name $APP_NAME   --runtime "dotnet:8"   --deployment-local-git
 
 # --- Configurar Connection String ---
 echo "🔗 Configurando Connection String..."

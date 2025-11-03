@@ -48,13 +48,13 @@ CONNECTION_STRING="Server=tcp:$SQL_SERVER.database.windows.net,1433;Initial Cata
 az webapp config connection-string set \
   --resource-group $RESOURCE_GROUP \
   --name $APP_NAME \
-  --settings "DEFAULT_CONNECTION=$CONNECTION_STRING" \
+  --settings "DefaultConnection=$CONNECTION_STRING" \
   --connection-string-type SQLAzure
 
 
 # --- Aplicar migrações do Entity Framework ---
 echo "🧩 Aplicando migrações do Entity Framework..."
-export DEFAULT_CONNECTION="$CONNECTION_STRING"
+export DefaultConnection="$CONNECTION_STRING"
 
 
 # Certifique-se de que o dotnet-ef está instalado

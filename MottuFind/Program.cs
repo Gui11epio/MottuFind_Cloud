@@ -21,9 +21,9 @@ namespace Sprint1_C_
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
+                var connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
                 if (string.IsNullOrWhiteSpace(connectionString))
-                    throw new Exception("A variável de ambiente DEFAULT_CONNECTION não está definida.");
+                    throw new Exception("A variável de ambiente DefaultConnection não está definida.");
 
                 options.UseSqlServer(connectionString);
             });

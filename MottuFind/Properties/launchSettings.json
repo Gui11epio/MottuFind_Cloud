@@ -15,7 +15,8 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
         "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "DEFAULT_CONNECTION": "Server=tcp:mottu-sql-server.database.windows.net,1433;Initial Catalog=mottudb;Persist Security Info=False;User ID=mottuadmin;Password=SenhaForte123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
         },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7117;http://localhost:5288"

@@ -1,4 +1,4 @@
-[deploy_mottufind_sql.sh](https://github.com/user-attachments/files/23421038/deploy_mottufind_sql.sh)# Sprint 3
+# Sprint 4
 
 ### 👥 Nome e RM dos Integrantes
 
@@ -70,10 +70,13 @@ Com o objetivo de deixar a aplicação mais organizada e destribuir as responsab
    cd MottuFind_Cloud/
    ```
 4. **Rode o arquivo .sh**
+   
+   [deploy_mottufind_sql.sh](https://github.com/user-attachments/files/23421038/deploy_mottufind_sql.sh)
 
-
-
-
+5. **Após rodar o arquivo entre no webapp para testar**
+   ```bash
+   https://mottufind-app.azurewebsites.net/swagger/index.html
+   ````
 
 ## 📬JSON de Teste
 
@@ -159,7 +162,6 @@ Com o objetivo de deixar a aplicação mais organizada e destribuir as responsab
 ```
 
 ## Estrutura do Projeto
-
 
 <img width="1536" height="1024" alt="estruturaProjeto" src="https://github.com/user-attachments/assets/012c74b5-a9fa-42d1-b955-6053b83ecf9f" />
 

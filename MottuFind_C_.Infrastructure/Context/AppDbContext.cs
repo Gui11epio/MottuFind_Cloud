@@ -19,13 +19,14 @@ namespace Sprint1_C_.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             // ==============================
             // 🏢 FILIAL
             // ==============================
             modelBuilder.Entity<Filial>(entity =>
             {
                 entity.ToTable("TB_FILIAIS");
-
                 entity.HasKey(f => f.Id);
 
                 entity.Property(f => f.Cidade)
@@ -43,7 +44,6 @@ namespace Sprint1_C_.Infrastructure.Data
             modelBuilder.Entity<Patio>(entity =>
             {
                 entity.ToTable("TB_PATIOS");
-
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Nome)
@@ -55,7 +55,7 @@ namespace Sprint1_C_.Infrastructure.Data
                 entity.HasOne(p => p.Filial)
                     .WithMany(f => f.Patios)
                     .HasForeignKey(p => p.FilialId)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.Cascade) // 🔥 Apaga pátios ao excluir filial
                     .HasConstraintName("FK_PATIOS_FILIAIS");
             });
 
@@ -65,11 +65,9 @@ namespace Sprint1_C_.Infrastructure.Data
             modelBuilder.Entity<Moto>(entity =>
             {
                 entity.ToTable("TB_MOTOS");
-
                 entity.HasKey(m => m.Placa);
 
                 entity.Property(m => m.Placa)
-                    .HasColumnName("Placa")
                     .HasMaxLength(20)
                     .IsRequired();
 
@@ -78,12 +76,12 @@ namespace Sprint1_C_.Infrastructure.Data
                     .IsRequired();
 
                 entity.Property(m => m.Modelo)
-                    .HasConversion<string>() // Enum → string (melhor para legibilidade)
+                    .HasConversion<string>()
                     .HasMaxLength(50)
                     .IsRequired();
 
                 entity.Property(m => m.Status)
-                    .HasConversion<string>() // Enum → string
+                    .HasConversion<string>()
                     .HasMaxLength(30)
                     .IsRequired();
 
@@ -92,17 +90,16 @@ namespace Sprint1_C_.Infrastructure.Data
                 entity.HasOne(m => m.Patio)
                     .WithMany(p => p.Motos)
                     .HasForeignKey(m => m.PatioId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade) // 🔥 Exclui motos ao apagar o pátio
                     .HasConstraintName("FK_MOTOS_PATIOS");
             });
 
             // ==============================
-            // 🏷️ TAG RFID
+            // 🏷️ TAG RFID (1:1 com Moto)
             // ==============================
             modelBuilder.Entity<TagRfid>(entity =>
             {
                 entity.ToTable("TB_TAGS_RFID");
-
                 entity.HasKey(t => t.Id);
 
                 entity.Property(t => t.CodigoIdentificacao)
@@ -113,7 +110,6 @@ namespace Sprint1_C_.Infrastructure.Data
                     .HasMaxLength(20)
                     .IsRequired();
 
-                // Índice único para 1:1
                 entity.HasIndex(t => t.MotoPlaca)
                       .IsUnique();
 
@@ -121,17 +117,16 @@ namespace Sprint1_C_.Infrastructure.Data
                     .WithOne(m => m.TagRfid)
                     .HasForeignKey<TagRfid>(t => t.MotoPlaca)
                     .HasPrincipalKey<Moto>(m => m.Placa)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade) // 🔥 Remove tag quando moto for removida
                     .HasConstraintName("FK_TAGS_MOTOS");
             });
 
             // ==============================
-            // 📡 LEITOR RFID
+            // 📡 LEITOR RFID (1:N com Pátio)
             // ==============================
             modelBuilder.Entity<LeitorRfid>(entity =>
             {
                 entity.ToTable("TB_LEITORES_RFID");
-
                 entity.HasKey(l => l.Id);
 
                 entity.Property(l => l.Localizacao)
@@ -145,29 +140,30 @@ namespace Sprint1_C_.Infrastructure.Data
                 entity.HasOne(l => l.Patio)
                     .WithMany(p => p.Leitores)
                     .HasForeignKey(l => l.PatioId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade) // 🔥 Remove leitores ao apagar pátio
                     .HasConstraintName("FK_LEITORES_PATIOS");
             });
 
             // ==============================
-            // 📈 LEITURA RFID
+            // 📈 LEITURA RFID (Histórico)
             // ==============================
             modelBuilder.Entity<LeituraRfid>(entity =>
             {
                 entity.ToTable("TB_LEITURAS_RFID");
-
                 entity.HasKey(l => l.Id);
 
                 entity.Property(l => l.DataHora)
                     .HasColumnType("datetime2")
                     .IsRequired();
 
+                // 🔒 MANTER HISTÓRICO: se um Leitor for removido, a leitura permanece
                 entity.HasOne(l => l.Leitor)
                     .WithMany(r => r.Leituras)
                     .HasForeignKey(l => l.LeitorId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_LEITURAS_LEITORES");
 
+                // 🔒 MANTER HISTÓRICO: se uma Tag for removida, leitura fica guardada
                 entity.HasOne(l => l.TagRfid)
                     .WithMany()
                     .HasForeignKey(l => l.TagRfidId)
@@ -181,7 +177,6 @@ namespace Sprint1_C_.Infrastructure.Data
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.ToTable("TB_USUARIOS");
-
                 entity.HasKey(u => u.Id);
 
                 entity.Property(u => u.NomeUsuario)
@@ -202,6 +197,7 @@ namespace Sprint1_C_.Infrastructure.Data
                     .IsRequired();
             });
         }
+
 
     }
 }

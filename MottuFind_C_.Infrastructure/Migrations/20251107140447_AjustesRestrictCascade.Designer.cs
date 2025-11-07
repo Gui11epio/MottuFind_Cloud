@@ -12,8 +12,8 @@ using Sprint1_C_.Infrastructure.Data;
 namespace MottuFind_C_.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251031192201_SqlServer")]
-    partial class SqlServer
+    [Migration("20251107140447_AjustesRestrictCascade")]
+    partial class AjustesRestrictCascade
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,8 +106,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                 {
                     b.Property<string>("Placa")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("Placa");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Marca")
                         .IsRequired()
@@ -221,7 +220,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.Patio", "Patio")
                         .WithMany("Leitores")
                         .HasForeignKey("PatioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_LEITORES_PATIOS");
 
@@ -254,7 +253,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.Patio", "Patio")
                         .WithMany("Motos")
                         .HasForeignKey("PatioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_MOTOS_PATIOS");
 
@@ -278,7 +277,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.Moto", "Moto")
                         .WithOne("TagRfid")
                         .HasForeignKey("Sprint1_C_.Domain.Entities.TagRfid", "MotoPlaca")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_TAGS_MOTOS");
 

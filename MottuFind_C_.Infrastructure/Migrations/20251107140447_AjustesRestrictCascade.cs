@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MottuFind_C_.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class SqlServer : Migration
+    public partial class AjustesRestrictCascade : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -79,7 +79,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         column: x => x.PatioId,
                         principalTable: "TB_PATIOS",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,7 +100,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         column: x => x.PatioId,
                         principalTable: "TB_PATIOS",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,7 +120,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         column: x => x.MotoPlaca,
                         principalTable: "TB_MOTOS",
                         principalColumn: "Placa",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

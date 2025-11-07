@@ -21,10 +21,22 @@ namespace Sprint1_C_
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
-                if (string.IsNullOrWhiteSpace(connectionString))
-                    throw new Exception("A variável de ambiente DEFAULT_CONNECTION não está definida.");
+                // Tenta ler primeiro a variável usada no Azure (CUSTOMCONNSTR_)
+                var connectionString = Environment.GetEnvironmentVariable("CUSTOMCONNSTR_DEFAULT_CONNECTION");
 
+                // Se não achar, tenta a variável local (DEFAULT_CONNECTION)
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
+
+                // E por fim, tenta o appsettings.json local
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+                // Se ainda estiver vazio, lança uma exceção clara
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    throw new Exception("❌ Nenhuma connection string foi encontrada. Verifique as variáveis de ambiente ou o appsettings.json.");
+
+                // Usa o SQL Server com a connection string encontrada
                 options.UseSqlServer(connectionString);
             });
 

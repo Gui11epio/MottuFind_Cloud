@@ -161,9 +161,10 @@ Com o objetivo de deixar a aplicação mais organizada e destribuir as responsab
 
 ```
 
-## Estrutura do Projeto
+## Diagrama CI/CD do Projeto
 
-<img width="1536" height="1024" alt="estruturaProjeto" src="https://github.com/user-attachments/assets/012c74b5-a9fa-42d1-b955-6053b83ecf9f" />
+<img width="1321" height="621" alt="Diagrama" src="https://github.com/user-attachments/assets/17ebe5fc-2567-413b-934c-c6d581c6f509" />
+
 
 
 

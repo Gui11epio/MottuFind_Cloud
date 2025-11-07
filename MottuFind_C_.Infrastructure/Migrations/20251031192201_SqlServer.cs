@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MottuFind_C_.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AjusteCascadeDelete : Migration
+    public partial class SqlServer : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -79,7 +79,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         column: x => x.PatioId,
                         principalTable: "TB_PATIOS",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,7 +100,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         column: x => x.PatioId,
                         principalTable: "TB_PATIOS",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,7 +120,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         column: x => x.MotoPlaca,
                         principalTable: "TB_MOTOS",
                         principalColumn: "Placa",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,13 +141,13 @@ namespace MottuFind_C_.Infrastructure.Migrations
                         column: x => x.LeitorId,
                         principalTable: "TB_LEITORES_RFID",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_LEITURAS_TAGS",
                         column: x => x.TagRfidId,
                         principalTable: "TB_TAGS_RFID",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

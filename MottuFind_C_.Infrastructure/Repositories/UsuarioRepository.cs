@@ -53,9 +53,9 @@ namespace MottuFind_C_.Infrastructure.Repositories
 
         public async Task<bool> RemoverAsync(int id)
         {
-            var usuario = await _context.Patio.FindAsync(id);
+            var usuario = await _context.Usuario.FindAsync(id);
             if (usuario == null) return false;
-            _context.Patio.Remove(usuario);
+            _context.Usuario.Remove(usuario);
             await _context.SaveChangesAsync();
             return true;
         }

@@ -55,7 +55,7 @@ namespace Sprint1_C_.Infrastructure.Data
                 entity.HasOne(p => p.Filial)
                     .WithMany(f => f.Patios)
                     .HasForeignKey(p => p.FilialId)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.Cascade) // Se apagar a Filial, apaga os Pátios
                     .HasConstraintName("FK_PATIOS_FILIAIS");
             });
 
@@ -78,7 +78,7 @@ namespace Sprint1_C_.Infrastructure.Data
                     .IsRequired();
 
                 entity.Property(m => m.Modelo)
-                    .HasConversion<string>() // Enum → string (melhor para legibilidade)
+                    .HasConversion<string>() // Enum → string
                     .HasMaxLength(50)
                     .IsRequired();
 
@@ -92,7 +92,7 @@ namespace Sprint1_C_.Infrastructure.Data
                 entity.HasOne(m => m.Patio)
                     .WithMany(p => p.Motos)
                     .HasForeignKey(m => m.PatioId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade) // Se apagar o Pátio, apaga as Motos
                     .HasConstraintName("FK_MOTOS_PATIOS");
             });
 
@@ -113,17 +113,19 @@ namespace Sprint1_C_.Infrastructure.Data
                     .HasMaxLength(20)
                     .IsRequired();
 
-                // Índice único para 1:1
                 entity.HasIndex(t => t.MotoPlaca)
                       .IsUnique();
 
                 entity.HasOne(t => t.Moto)
-                    .WithOne(m => m.TagRfid)
-                    .HasForeignKey<TagRfid>(t => t.MotoPlaca)
-                    .HasPrincipalKey<Moto>(m => m.Placa)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_TAGS_MOTOS");
+                      .WithOne(m => m.TagRfid)
+                      .HasForeignKey<TagRfid>(t => t.MotoPlaca)
+                      .HasPrincipalKey<Moto>(m => m.Placa)
+                      .OnDelete(DeleteBehavior.Restrict)
+                      .HasConstraintName("FK_TAGS_MOTOS");
             });
+
+
+
 
             // ==============================
             // 📡 LEITOR RFID
@@ -145,7 +147,7 @@ namespace Sprint1_C_.Infrastructure.Data
                 entity.HasOne(l => l.Patio)
                     .WithMany(p => p.Leitores)
                     .HasForeignKey(l => l.PatioId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade) // Se apagar o Pátio, apaga os Leitores
                     .HasConstraintName("FK_LEITORES_PATIOS");
             });
 
@@ -165,13 +167,13 @@ namespace Sprint1_C_.Infrastructure.Data
                 entity.HasOne(l => l.Leitor)
                     .WithMany(r => r.Leituras)
                     .HasForeignKey(l => l.LeitorId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade) // Se apagar o Leitor, apaga as Leituras
                     .HasConstraintName("FK_LEITURAS_LEITORES");
 
                 entity.HasOne(l => l.TagRfid)
                     .WithMany()
                     .HasForeignKey(l => l.TagRfidId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade) // Se apagar a Tag, apaga as Leituras
                     .HasConstraintName("FK_LEITURAS_TAGS");
             });
 
@@ -202,6 +204,7 @@ namespace Sprint1_C_.Infrastructure.Data
                     .IsRequired();
             });
         }
+
 
     }
 }

@@ -218,7 +218,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.Patio", "Patio")
                         .WithMany("Leitores")
                         .HasForeignKey("PatioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_LEITORES_PATIOS");
 
@@ -230,14 +230,14 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.LeitorRfid", "Leitor")
                         .WithMany("Leituras")
                         .HasForeignKey("LeitorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_LEITURAS_LEITORES");
 
                     b.HasOne("Sprint1_C_.Domain.Entities.TagRfid", "TagRfid")
                         .WithMany()
                         .HasForeignKey("TagRfidId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_LEITURAS_TAGS");
 
@@ -251,7 +251,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.Patio", "Patio")
                         .WithMany("Motos")
                         .HasForeignKey("PatioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_MOTOS_PATIOS");
 
@@ -275,7 +275,7 @@ namespace MottuFind_C_.Infrastructure.Migrations
                     b.HasOne("Sprint1_C_.Domain.Entities.Moto", "Moto")
                         .WithOne("TagRfid")
                         .HasForeignKey("Sprint1_C_.Domain.Entities.TagRfid", "MotoPlaca")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_TAGS_MOTOS");
 
